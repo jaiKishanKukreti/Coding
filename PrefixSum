@@ -1,0 +1,149 @@
+🔥 PREFIX SUM – PRACTICE LINKS (JAVA FRIENDLY)
+🟢 LEVEL 1: BASIC PREFIX FEEL (Foundation)
+1️⃣ Range Sum Query – Immutable
+
+👉 Prefix sum ka base question
+🔗 https://leetcode.com/problems/range-sum-query-immutable/
+
+KYUN?
+
+Prefix array banana
+
+L–R logic clear hota hai
+
+2️⃣ Find Pivot Index
+
+🔗 https://leetcode.com/problems/find-pivot-index/
+
+KYUN?
+
+Left sum = Right sum
+
+Prefix thinking develop hoti hai
+
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int total = 0;
+        for (int num : nums) total += num;
+
+        int leftSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (leftSum == total - leftSum - nums[i]) {
+                return i;
+            }
+            leftSum += nums[i];
+        }
+        return -1;
+    }
+}
+
+
+🟡 LEVEL 2: CORE PREFIX + HASHMAP (MOST IMPORTANT)
+3️⃣ Subarray Sum Equals K
+
+🔗 https://leetcode.com/problems/subarray-sum-equals-k/
+
+KYUN?
+
+Prefix + HashMap ka king question
+
+Negatives + overlapping
+
+4️⃣ Continuous Subarray Sum
+
+🔗 https://leetcode.com/problems/continuous-subarray-sum/
+
+KYUN?
+
+Prefix + modulo
+
+Google / Amazon type
+
+5️⃣ Subarray Sums Divisible by K
+
+🔗 https://leetcode.com/problems/subarray-sums-divisible-by-k/
+
+KYUN?
+
+Prefix + remainder logic
+
+Advanced thinking
+
+🟡 LEVEL 3: LONGEST / ZERO SUM TYPE
+6️⃣ Longest Subarray with Sum K (GFG)
+
+🔗 https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1
+
+KYUN?
+
+First occurrence logic
+
+Length maximize karna
+
+7️⃣ Largest Subarray with 0 Sum
+
+🔗 https://www.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1
+
+KYUN?
+
+Repeated prefix sum meaning
+
+Zero-sum intuition
+
+🔵 LEVEL 4: TRANSFORMATION BASED (SMART QUESTIONS)
+8️⃣ Contiguous Array (Equal 0s & 1s)
+
+🔗 https://leetcode.com/problems/contiguous-array/
+
+KYUN?
+
+0 → -1 trick
+
+Prefix transformation power
+
+9️⃣ Binary Subarrays With Sum
+
+🔗 https://leetcode.com/problems/binary-subarrays-with-sum/
+
+KYUN?
+
+Prefix + count
+
+Binary optimization
+
+🔴 LEVEL 5: ADVANCED / INTERVIEW HEAVY
+🔟 Make Sum Divisible by P
+
+🔗 https://leetcode.com/problems/make-sum-divisible-by-p/
+
+KYUN?
+
+Prefix + modulo + hashmap
+
+Tough but very rewarding
+
+1️⃣1️⃣ Count Number of Nice Subarrays
+
+🔗 https://leetcode.com/problems/count-number-of-nice-subarrays/
+
+KYUN?
+
+Prefix sum disguised
+
+Pattern recognition test
+
+🧠 HOW TO PRACTICE (VERY IMPORTANT)
+
+For each question:
+1️⃣ Pehle sirf question padho
+2️⃣ Decide:
+
+Sliding window? ❌
+
+Prefix sum? ✅
+3️⃣ Khud approach likho
+4️⃣ Code Java me likho
+5️⃣ Edge cases note karo
+
+❌ Direct solution mat dekho
+✔ 15–20 min struggle = growth
