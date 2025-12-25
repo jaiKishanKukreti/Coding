@@ -1,0 +1,320 @@
+🧠 UNIVERSAL PREFIX-SUM TEMPLATE (BASE)
+// PREFIX SUM + HASHMAP TEMPLATE
+Map<Integer, Integer> map = new HashMap<>();
+map.put(0, INITIAL_INDEX); // base case
+
+int sum = 0;
+
+for (int i = 0; i < n; i++) {
+    sum += nums[i];
+
+    // derive key from sum (sum, sum-k, sum%k, etc)
+
+    if (map.containsKey(key)) {
+        // condition check (length / count / max)
+    }
+
+    // store first occurrence OR count
+}
+
+1️⃣ Range Sum Query – Immutable (LeetCode 303)
+🧠 Template: Pure Prefix Array
+class NumArray {
+    int[] prefix;
+
+    public NumArray(int[] nums) {
+        prefix = new int[nums.length];
+
+        // prefix[0] = first element
+        prefix[0] = nums[0];
+
+        // build prefix sum
+        for (int i = 1; i < nums.length; i++) {
+            prefix[i] = prefix[i - 1] + nums[i];
+        }
+    }
+
+    public int sumRange(int left, int right) {
+        // if left == 0, directly return prefix[right]
+        if (left == 0) return prefix[right];
+
+        // subtract left-1 sum
+        return prefix[right] - prefix[left - 1];
+    }
+}
+
+
+📌 WHY PREFIX?
+Multiple range queries → O(1) answer
+
+2️⃣ Pivot Index (LeetCode 724)
+🧠 Template: Prefix Logic without array
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int total = 0;
+
+        // calculate total sum
+        for (int num : nums) total += num;
+
+        int leftSum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            // right sum = total - left - current
+            if (leftSum == total - leftSum - nums[i]) {
+                return i;
+            }
+            leftSum += nums[i];
+        }
+        return -1;
+    }
+}
+
+
+📌 WHY?
+Prefix idea without extra space
+
+3️⃣ Subarray Sum Equals K (LeetCode 560)
+🧠 Template: Prefix + HashMap (COUNT)
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1); // sum=0 occurs once
+
+        int sum = 0, count = 0;
+
+        for (int num : nums) {
+            sum += num;
+
+            // check if (sum - k) existed before
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
+            }
+
+            // store frequency of current sum
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+
+
+📌 WHY PREFIX?
+Negative numbers → sliding window fails
+
+4️⃣ Continuous Subarray Sum (LeetCode 523)
+🧠 Template: Prefix + Modulo + HashMap
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1); // remainder 0 at index -1
+
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            int rem = (k == 0) ? sum : sum % k;
+
+            // same remainder seen before
+            if (map.containsKey(rem)) {
+                if (i - map.get(rem) >= 2) {
+                    return true;
+                }
+            } else {
+                // store FIRST occurrence only
+                map.put(rem, i);
+            }
+        }
+        return false;
+    }
+}
+
+
+📌 WHY PREFIX?
+Same remainder ⇒ divisible subarray
+
+5️⃣ Subarray Sums Divisible by K (LeetCode 974)
+🧠 Template: Prefix + Mod Count
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+
+        int sum = 0, count = 0;
+
+        for (int num : nums) {
+            sum += num;
+            int rem = ((sum % k) + k) % k; // handle negative
+
+            if (map.containsKey(rem)) {
+                count += map.get(rem);
+            }
+
+            map.put(rem, map.getOrDefault(rem, 0) + 1);
+        }
+        return count;
+    }
+}
+
+
+📌 WHY?
+Same remainder pairs = valid subarrays
+
+6️⃣ Longest Subarray with Sum K (GFG)
+🧠 Template: Prefix + HashMap (FIRST OCCURRENCE)
+class Solution {
+    public static int lenOfLongSubarr(int[] nums, int n, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int sum = 0, maxLen = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+
+            if (sum == k) maxLen = i + 1;
+
+            if (!map.containsKey(sum)) {
+                map.put(sum, i);
+            }
+
+            if (map.containsKey(sum - k)) {
+                maxLen = Math.max(maxLen, i - map.get(sum - k));
+            }
+        }
+        return maxLen;
+    }
+}
+
+
+📌 WHY FIRST OCCURRENCE?
+Earlier index ⇒ longer subarray
+
+7️⃣ Largest Subarray with 0 Sum (GFG)
+🧠 Template: Prefix Repeat = Zero Sum
+class Solution {
+    int maxLen(int[] nums, int n) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int sum = 0, maxLen = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+
+            if (sum == 0) maxLen = i + 1;
+
+            if (map.containsKey(sum)) {
+                maxLen = Math.max(maxLen, i - map.get(sum));
+            } else {
+                map.put(sum, i);
+            }
+        }
+        return maxLen;
+    }
+}
+
+8️⃣ Contiguous Array (LeetCode 525)
+🧠 Template: Prefix + Transformation
+class Solution {
+    public int findMaxLength(int[] nums) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+
+        int sum = 0, maxLen = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            // convert 0 → -1
+            sum += (nums[i] == 0) ? -1 : 1;
+
+            if (map.containsKey(sum)) {
+                maxLen = Math.max(maxLen, i - map.get(sum));
+            } else {
+                map.put(sum, i);
+            }
+        }
+        return maxLen;
+    }
+}
+
+
+📌 WHY?
+Equal 0 & 1 ⇒ balanced prefix sum
+
+9️⃣ Binary Subarrays With Sum (LeetCode 930)
+🧠 Template: Prefix + Count
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+
+        int sum = 0, count = 0;
+
+        for (int num : nums) {
+            sum += num;
+
+            if (map.containsKey(sum - goal)) {
+                count += map.get(sum - goal);
+            }
+
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+
+🔟 Make Sum Divisible by P (LeetCode 1590)
+🧠 Template: Prefix + Modulo + Min Length
+class Solution {
+    public int minSubarray(int[] nums, int p) {
+
+        int total = 0;
+        for (int num : nums) total = (total + num) % p;
+
+        if (total == 0) return 0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+
+        int sum = 0, minLen = nums.length;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum = (sum + nums[i]) % p;
+
+            int need = (sum - total + p) % p;
+
+            if (map.containsKey(need)) {
+                minLen = Math.min(minLen, i - map.get(need));
+            }
+
+            map.put(sum, i);
+        }
+        return minLen == nums.length ? -1 : minLen;
+    }
+}
+
+1️⃣1️⃣ Count Number of Nice Subarrays (LeetCode 1248)
+🧠 Template: Prefix Count on Transformed Array
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+
+        int sum = 0, count = 0;
+
+        for (int num : nums) {
+            sum += num % 2; // odd → 1, even → 0
+
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
+            }
+
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
